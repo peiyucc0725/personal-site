@@ -1,7 +1,238 @@
 .skills-section {
-  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  height: 100vh;
+  padding: 100px 40px;
   position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+.skill-panel {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  background-color: transparent;
+  transition: background 0.4s ease;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 80px;
+  border-radius: 8px;
+
+  @media (max-width: 768px) {
+    flex-direction: column; 
+    flex-basis: 60px;
+    width: 100%;
+    border-left: none;
+
+    &.active {
+      flex-basis: auto !important;
+      flex-grow: 0 !important;
+    }
+  }
+
+  .panel-label {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 0;
+    width: 80px;
+    min-width: 80px;
+    cursor: pointer;
+    background-color: rgba($bg-secondary, 0.2);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 60px;
+      min-height: 60px;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0 2rem;
+      writing-mode: horizontal-tb;
+
+      .num {
+        margin-bottom: 0 !important;
+        margin-right: 15px;
+
+        &::after {
+          display: none !important;
+        }
+      }
+
+      .title {
+        writing-mode: horizontal-tb !important;
+        letter-spacing: 0.1em !important;
+      }
+    }
+
+    .num {
+      font-size: 0.8rem;
+      color: $primary-color;
+      margin-bottom: 2.5rem;
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 1px;
+        height: 15px;
+        background: rgba($primary-color, 0.3);
+        margin: 8px auto 0;
+      }
+    }
+
+    .title {
+      writing-mode: vertical-lr;
+      text-orientation: mixed;
+      font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 0.4em;
+      color: $accent-color;
+      text-transform: uppercase;
+    }
+
+    &:hover {
+      background-color: rgba($primary-light, 0.1);
+
+      .title {
+        color: $primary-dark;
+      }
+    }
+  }
+
+  .panel-content {
+    flex: 1;
+    flex-shrink: 0;
+    padding: 3rem 4rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-20px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: calc(100vw - 240px);
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      padding: 2rem;
+      transform: translateY(0px) !important;
+      max-height: calc(100vh - 180px - 200px);
+    }
+
+    .skill-item {
+      flex-shrink: 0;
+      width: 100%;
+      min-width: 300px;
+
+      .skill-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 12px;
+
+        .name {
+          font-size: 1.2rem;
+          color: $text-main;
+          font-weight: 500;
+        }
+
+        .percent {
+          font-size: 1rem;
+          color: $primary-color;
+        }
+      }
+
+      .progress-track {
+        height: 1px;
+        background: rgba($accent-color, 0.15);
+        position: relative;
+
+        .progress-fill {
+          height: 2px;
+          background: $accent-color;
+          position: absolute;
+          top: -0.5px;
+          transform-origin: left;
+
+          &::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            width: 2px;
+            height: 10px;
+            background: $primary-color;
+            top: -4px;
+          }
+        }
+      }
+
+      .desc {
+        margin-top: 15px;
+        font-size: 0.9rem;
+        color: $text-muted;
+        line-height: 1.7;
+        letter-spacing: 0.02em;
+        text-align: start;
+      }
+    }
+  }
+
+  &.active {
+    background-color: $card-bg;
+    backdrop-filter: blur(5px);
+    box-shadow: inset 0 0 50px rgba($primary-dark, 0.02);
+    flex-grow: 12;
+    flex-basis: 300px;
+
+    .panel-label {
+      background-color: transparent;
+      border-right: none;
+
+      .num {
+        &::after {
+          height: 30px;
+          background: $primary-color;
+        }
+      }
+
+      .title {
+        color: $text-main;
+        font-weight: 600;
+      }
+    }
+
+    .panel-content {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+  }
+}
+
+.panel-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.panel-content::-webkit-scrollbar-track {
+  background: $card-bg;
+}
+
+.panel-content::-webkit-scrollbar-thumb {
+  background: rgba($accent-color, 0.2);
+  border-radius: 10px;
 }
