@@ -8,7 +8,7 @@
   gap: 80px;
 
   .about-content {
-    min-width: 500px;
+    min-width: 550px;
 
     .highlight-item {
       display: flex;
@@ -21,14 +21,14 @@
         font-family: 'Your Monospace Font', monospace;
         font-size: 1.1rem;
         font-weight: 600;
-        color: #c2a685; // 標題用點綴色
+        color: #c2a685;
         margin-bottom: 8px;
         letter-spacing: 0.05em;
       }
 
       .description {
         font-size: 0.95rem;
-        color: #4a4a4a; // 你的指定色
+        color: #4a4a4a;
         line-height: 1.7;
         opacity: 0.85;
       }

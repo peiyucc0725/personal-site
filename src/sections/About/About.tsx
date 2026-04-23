@@ -15,9 +15,18 @@ const About = () => {
   const [animDone, setAnimDone] = useState(false);
 
   const content = [
-    { title: "Senior Frontend Specialist", desc: "逾 7 年大型專案實戰，深耕嵌入式系統與 IoT 控制介面。" },
-    { title: "Technical Stack Expertise", desc: "精通 Vue 3 生態系，並具備優化大規模 Canvas 組件的豐富經驗。" },
-    { title: "Strategic Problem Solver", desc: "超越單純編碼，從設計源頭介入，提供具高度擴展性的技術架構。" }
+    { 
+      title: "Senior Frontend Specialist", 
+      desc: "超過 7 年大型專案開發經驗，專注於嵌入式系統 Web 介面與 IoT 控制設備。" 
+    },
+    { 
+      title: "Technical Stack Expertise", 
+      desc: "精通 Vue 3 生態系，並具備大規模 Canvas 組件與效能優化的實務經驗。" 
+    },
+    { 
+      title: "Strategic Problem Solver", 
+      desc: "不只是寫 Code，更從產品設計階段介入，提供具備高度擴充性的技術架構建議。" 
+    }
   ];
 
   useGSAP(() => {

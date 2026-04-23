@@ -23,12 +23,10 @@ const StateMarker: React.FC<StateMarkerProps> = ({
       repeat: -1,
       ease: "none"
     });
-  }, { scope: markerRef }); // 沒放 dependencies，代表只在掛載時啟動一次
+  }, { scope: markerRef });
 
-  // 2. 入場與退場動畫：控制整個 Marker 的出現與消失
   useGSAP(() => {
     if (isParentAnimDone) {
-      // 進入動畫
       const tl = gsap.timeline();
       tl.to(markerRef.current, {
         opacity: 1,
@@ -41,7 +39,6 @@ const StateMarker: React.FC<StateMarkerProps> = ({
       })
         .call(() => runShuffle(statusText));
     } else {
-      // 離開動畫：直接讓整個 Marker（包含 spinner）一起淡出
       gsap.to(markerRef.current, {
         opacity: 0,
         x: 20,

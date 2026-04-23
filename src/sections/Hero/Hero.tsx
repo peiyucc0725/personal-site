@@ -28,7 +28,7 @@ const Hero: React.FC = () => {
       scale: 0.5,
       opacity: 0,
       duration: 1.5,
-      z: -100 // 從深處滑入
+      z: -100
     })
       .from(titleWords, {
         y: 60,
@@ -51,7 +51,6 @@ const Hero: React.FC = () => {
       const relX = (e.clientX / window.innerWidth - 0.5) * 2;
       const relY = (e.clientY / window.innerHeight - 0.5) * 2;
 
-      // 限制旋轉角度在 +-15 度以內
       xTo(relX * 15);
       yTo(-relY * 15); // Y 軸反向
     };
@@ -59,7 +58,7 @@ const Hero: React.FC = () => {
     window.addEventListener("mousemove", moveMouse);
 
     gsap.to(logoRef.current, {
-      rotationY: 360, // 繞 Y 軸旋轉
+      rotationY: 360,
       ease: "none",
       scrollTrigger: {
         trigger: container.current,
