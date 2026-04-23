@@ -79,8 +79,6 @@ const Hero: React.FC = () => {
         <img
           ref={logoRef}
           src="/logo.png"
-          width={350}
-          height={350}
           alt="Logo"
           className="big-logo 3d-object"
         />

@@ -18,6 +18,17 @@
   height: 384px;
   overflow: hidden;
   background-color: #f0f0f0;
+
+  @media (max-width: 1024px) {
+    width: 201.6px;
+    height: 268.8px;
+  }
+
+  @media (max-width: 768px) {
+    width: 172.8px;
+    height: 172.8px;
+  }
+
 }
 
 .imageWrapper img {

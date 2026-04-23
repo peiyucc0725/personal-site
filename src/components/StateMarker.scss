@@ -5,6 +5,11 @@
   z-index: 10;
   opacity: 0;
 
+  @media (max-width: 768px) {
+    bottom: 2rem;
+    right: 2rem;
+  }
+
   .marker-content {
     display: flex;
     align-items: center;

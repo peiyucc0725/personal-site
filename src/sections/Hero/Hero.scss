@@ -1,5 +1,6 @@
 .hero-section {
   height: 100vh;
+  min-height: 100vh;
   position: relative;
   perspective: 1000px;
   overflow: hidden;
@@ -7,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0 20px;
 
   .hero-content {
     position: relative;
@@ -21,13 +23,21 @@
   .big-logo {
     display: block;
     margin: 0 auto;
+    width: 350px;
+    height: 350px;
     will-change: transform;
+
+    @media (max-width: 768px) {
+      width: 250px;
+      height: 250px;
+    }
   }
 
   .title {
     color: #6e6e6e;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 20px;
     cursor: default;
     text-shadow: 1px 1px 0px #6e6e6e80;
@@ -39,9 +49,15 @@
       &:not(.name) {
         font-size: 46px;
       }
-      
+
       &:hover {
         color: $primary-color;
+      }
+
+      &:first-child {
+        @media (max-width: 768px) {
+          width: 100%;
+        }
       }
     }
   }
@@ -52,6 +68,10 @@
     position: relative;
     margin: 0 auto;
     width: fit-content;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
 
     &:hover {
       &:after {
