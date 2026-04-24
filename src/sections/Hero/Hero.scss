@@ -46,10 +46,6 @@
       display: inline-block;
       transition: color .3s;
 
-      &:not(.name) {
-        font-size: 46px;
-      }
-
       &:hover {
         color: $primary-color;
       }

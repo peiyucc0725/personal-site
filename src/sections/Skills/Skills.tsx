@@ -11,21 +11,22 @@ interface Skill {
 
 const skillData: Record<string, Skill[]> = {
   frontend: [
-    { name: "Vue", level: 95, desc: "主力強項，具備深厚的架構與組件開發經驗。" },
-    { name: "React", level: 60, desc: "目前網站開發所使用的框架，展示技術靈活性。" },
-    { name: "JavaScript", level: 90, desc: undefined },
-    { name: "jQuery", level: 90, desc: undefined },
-    { name: "CSS / SCSS / SASS", level: 85, desc: undefined }
+    { name: "Vue", level: 95, desc: "核心技術強項，精通 Vue 2/3 生態系（包含 Router, Pinia），具備大型專案架構設計與效能優化經驗。" },
+    { name: "React", level: 60, desc: "目前專案採用的框架，能靈活運用 Hooks 與狀態管理工具，展現跨技術棧的學習力。" },
+    { name: "JavaScript", level: 90, desc: "深厚的 ES6+ 基礎，精通非同步處理（Async/Await）、原型鏈及閉包等核心概念。" },
+    { name: "jQuery", level: 90, desc: "具備維護大型舊專案與 Legacy Code 的能力，能精確操作 DOM 並處理跨瀏覽器相容性。" },
+    { name: "CSS / SCSS / SASS", level: 85, desc: "熟練使用預處理器與 CSS 設計模式，能精準還原設計稿並實作複雜的手勢與動畫。" }
   ],
   backend: [
-    { name: "Node.js", level: 50, desc: undefined },
-    { name: "PHP", level: 50, desc: undefined },
-    { name: "Python", level: 60, desc: undefined }
+    { name: "Node.js", level: 50, desc: "擅長撰寫自動化腳本與工具，並具備 Express 開發簡單 RESTful API 的實務經驗。" },
+    { name: "PHP", level: 60, desc: "具備 Laravel 與 CodeIgniter 實務開發經驗，曾參與核心系統維護與第三方金流串接。" },
+    { name: "Python", level: 65, desc: "具備 Selenium 與 BS4 爬蟲經驗，並曾透過 Flask 實作 Line Bot 與 OpenAI Whisper 語音轉文字應用。" },
+    { name: "MySQL", level: 60, desc: "具備資料庫設計與操作經驗，能撰寫 SQL 語法進行 CRUD 操作並優化資料查詢結構。" }
   ],
   tools: [
-    { name: "Electron", level: 70, desc: "跨平台桌面端開發工具。" },
-    { name: "Vite / Webpack", level: 80, desc: undefined },
-    { name: "Git", level: 90, desc: undefined }
+    { name: "Electron", level: 70, desc: "具備跨平台桌面端開發經驗，能將前端技術轉化為穩定運作的離線應用程式。" },
+    { name: "Vite / Webpack", level: 80, desc: "掌握前端建置工具，能優化打包配置（Bundling）以大幅縮減載入時間與專案體積。" },
+    { name: "Git", level: 90, desc: "精通 Git Flow 版本控制與多人協作，具備優良的開發規範與衝突解決（Conflict）處理經驗。" }
   ]
 };
 
@@ -34,6 +35,18 @@ const Skills: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [animDone, setAnimDone] = useState(false);
   const lastIsMobile = useRef(window.innerWidth <= 768);
+  const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [hasScroll, setHasScroll] = useState(false);
+
+  const checkScroll = () => {
+    requestAnimationFrame(() => {
+      const activeEl = contentRefs.current[activeCat];
+      if (activeEl) {
+        const isOverflowing = activeEl.scrollHeight > activeEl.clientHeight + 1;
+        setHasScroll(isOverflowing);
+      }
+    });
+  };
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -49,6 +62,7 @@ const Skills: React.FC = () => {
           const isActive = id === activeCat;
           const content = panel.querySelector('.panel-content');
           const progressFills = panel.querySelectorAll('.progress-fill');
+          const descs = panel.querySelectorAll('.desc');
 
           gsap.killTweensOf([panel, content, progressFills]);
 
@@ -62,6 +76,7 @@ const Skills: React.FC = () => {
               if (isActive) {
                 setAnimDone(true);
                 gsap.set(panel, { clearProps: "all" });
+                checkScroll();
               }
             }
           });
@@ -82,7 +97,17 @@ const Skills: React.FC = () => {
                 { scaleX: 0 },
                 { scaleX: 1, duration: 1, stagger: 0.1, ease: "power3.out" },
                 "-=0.3"
-              );
+              )
+                .to(descs,
+                  {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "expo.out",
+                  },
+                  "<"
+                );
             }
           } else {
             tl.to(content, {
@@ -121,14 +146,23 @@ const Skills: React.FC = () => {
           key={key}
           className={`skill-panel ${activeCat === key ? 'active' : ''}`}
           data-id={key}
-          onClick={() => setActiveCat(key)}
+          onClick={() => {
+            setActiveCat(key);
+            setHasScroll(false);
+          }}
         >
           <div className="panel-label">
             <span className="num">0{index + 1}</span>
             <h2 className="title">{key.toUpperCase()}</h2>
           </div>
 
-          <div className="panel-content">
+          <div
+            className="panel-content"
+            ref={(el) => { contentRefs.current[key] = el; }}
+            style={{
+              overscrollBehavior: (activeCat === key && hasScroll) ? 'contain' : 'auto'
+            }}
+          >
             {skills.map((skill, i) => (
               <div key={i} className="skill-item">
                 <div className="skill-info">
