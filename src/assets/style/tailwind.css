@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  /* 對應你的 variable.scss */
+  --color-primary: #C18A67;
+  --color-primary-light: #DEB89B;
+  --color-primary-dark: #8E5C41;
+  
+  --color-bg-primary: #F9F8F4;
+  --color-bg-secondary: #EDEBDF;
+  
+  --color-text-main: #4A4A4A;
+  --color-text-muted: #8C8C8C;
+  
+  --color-card-bg: rgba(255, 255, 255, 0.45);
+  --color-card-border: rgba(123, 155, 166, 0.15); /* $accent-color 的 15% */
+}
+
+/* 讓 Swiper 容器可以溢出顯示（如果需要的話） */
+.project-swiper {
+  overflow: visible !important;
+}
+
+/* 自定義抓取效果 */
+.swiper-slide {
+  height: auto;
+}

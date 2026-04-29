@@ -7,7 +7,7 @@ export const EXPERIENCES = [
       { title: "研發副課長 / 資深前端工程師", date: "2023.11 — 2026.02" },
       { title: "前端工程師", date: "2020.05 — 2023.10" }
     ],
-    tech: ["Vue 3", "Canvas", "Fabric.js", "Web Audio API", "Electron", "WebSocket"],
+    tech: ["Vue 3", "Vite", "Pinia", "Canvas", "Fabric.js", "WebSocket", "Web Audio API", "Electron"],
     description: [
       "主導媒體處理器、環控系統等核心產品之 Web 操作系統開發與維護。",
       "運用 Canvas 與 Fabric.js 打造高彈性的拖拉式視覺化版型編輯器。",
@@ -21,7 +21,7 @@ export const EXPERIENCES = [
     period: "2018.09 — 2020.02",
     duration: "1 年 6 個月",
     roles: [{ title: "前端工程師", date: "2018.09 — 2020.02" }],
-    tech: ["Nuxt.js", "Vue 2", "PHP", "Python Flask", "MapBox"],
+    tech: ["Vue 2", "Nuxt.js", "PHP", "Python Flask", "MapBox"],
     description: [
       "開發與維護 CityPass 都會通電商平台，使用 Vue + Nuxt 進行 SSR 優化。",
       "整合 Apple Pay、Google Pay 金流支付與各類第三方社群登入機制。",

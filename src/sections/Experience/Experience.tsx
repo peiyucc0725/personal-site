@@ -33,7 +33,7 @@ const Experience: React.FC = () => {
       }
     );
 
-    EXPERIENCES.forEach((exp, index) => {
+    EXPERIENCES.forEach((_, index) => {
       const itemSelector = `.exp-item-${index}`;
 
       gsap.from(itemSelector, {

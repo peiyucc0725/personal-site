@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import './StateMarker.scss';
+import styles from './StateMarker.module.scss'; // 假設使用 CSS Modules
 
 interface StateMarkerProps {
   statusText?: string;
@@ -74,15 +74,15 @@ const StateMarker: React.FC<StateMarkerProps> = ({
   };
 
   return (
-    <div ref={markerRef} className="state-marker">
-      <div className="marker-content">
-        <svg ref={spinnerRef} className="spinner" viewBox="0 0 24 24">
+    <div ref={markerRef} className={styles.stateMarker}>
+      <div className={styles.markerContent}>
+        <svg ref={spinnerRef} className={styles.markerSpinner} viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10" stroke="rgba(0,0,0,0.05)" strokeWidth="1" fill="none" />
           <path d="M12 2 A10 10 0 0 1 22 12" stroke="#c2a685" strokeWidth="2" fill="none" strokeLinecap="round" />
         </svg>
-        <div className="text-group">
-          <span className="label">SYSTEM_STATUS</span>
-          <span className="value" ref={statusTextRef}>[***************]</span>
+        <div className={styles.markerStatus}>
+          <span className={styles.statusLabel}>SYSTEM_STATUS</span>
+          <span className={styles.statusText} ref={statusTextRef}>[***************]</span>
         </div>
       </div>
     </div>
