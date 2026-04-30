@@ -98,9 +98,18 @@ const ProjectSlider: React.FC = () => {
                     <h4 className="text-primary-light font-mono text-[10px] tracking-[0.3em] uppercase mb-4 border-b border-primary/20 pb-2">
                       Feature Details
                     </h4>
-                    <p className="text-bg-primary text-sm font-mono leading-relaxed">
-                      {project.description}
-                    </p>
+                    <div className="text-bg-primary font-mono text-sm leading-relaxed">
+                      <p className="mb-2 font-bold">{project.content.summary}</p>
+
+                      <ul className="list-inside space-y-1">
+                        {project.content.highlights.map((item, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="mr-2">✓</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                     <div className="mt-8">
                       <span className="text-primary-light/40 text-[9px] font-mono italic">
                         // click to return
