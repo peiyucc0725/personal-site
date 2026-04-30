@@ -1,4 +1,3 @@
-import './Projects.scss';
 // @ts-ignore
 import 'swiper/css';
 import React, { useRef, useState } from 'react';
@@ -13,23 +12,65 @@ const ProjectSlider: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [flippedId, setFlippedId] = useState<number | null>(null);
   const [animDone, setAnimDone] = useState(false);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
   const toggleFlip = (id: number) => {
     setFlippedId(flippedId === id ? null : id);
   };
 
+  const updateSwiperStatus = (swiper: any) => {
+    requestAnimationFrame(() => {
+      setIsBeginning(swiper.isBeginning);
+      setIsEnd(swiper.isEnd);
+    });
+  };
+
   useGSAP(() => {
-    gsap.timeline({
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        start: "top 80%",
+        start: "top 80%", // 稍微早一點觸發，體感更流暢
       },
       onComplete: () => setAnimDone(true)
     });
-  }, {});
+
+    tl.from(".swiper-slide", {
+      y: 80,
+      opacity: 0,
+      rotationY: 25,
+      duration: 1.5,
+      stagger: 0.15,
+      ease: "power3.out",
+    })
+      .from(".card-img-container", {
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power1.out",
+      }, "<0.3")
+      .from(".skill-tag", {
+        y: 10,
+        opacity: 0,
+        scale: 0.5,
+        duration: 0.4,
+        stagger: 0.05,
+        ease: "back.out(2)",
+      }, "<0.5")
+      .from(".nav-btn", {
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.out"
+      }, "<");
+
+  }, { scope: containerRef });
 
   return (
-    <section id="projects" ref={containerRef} className="projects-section">
+    <section id="projects" ref={containerRef} className="min-h-screen flex flex-col items-center justify-center relative px-10">
       <div className="max-w-5xl w-full mx-auto pt-14">
         <Swiper
           modules={[Navigation]}
@@ -37,15 +78,21 @@ const ProjectSlider: React.FC = () => {
           slidesPerView={1}
           autoHeight={false}
           grabCursor={true}
-          navigation={{
-            prevEl: '.prev-btn',
-            nextEl: '.next-btn',
-          }}
           breakpoints={{
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
           }}
           className="w-full"
+          onSwiper={(swiper) => {
+            setSwiperInstance(swiper);
+            updateSwiperStatus(swiper);
+          }}
+          onSlideChange={updateSwiperStatus}
+          onBreakpoint={(swiper) => {
+            swiper.update();
+            updateSwiperStatus(swiper);
+          }}
+          onUpdate={updateSwiperStatus}
         >
           {projects.map((project) => (
             <SwiperSlide key={project.id} className="py-8">
@@ -59,7 +106,7 @@ const ProjectSlider: React.FC = () => {
                 >
 
                   <div className="absolute inset-0 [backface-hidden] bg-card-bg backdrop-blur-sm rounded-4xl overflow-hidden border border-card-border flex flex-col duration-500 hover:shadow-md transition-shadow">
-                    <div className="p-4">
+                    <div className="p-4 card-img-container">
                       <div className="aspect-video w-full overflow-hidden rounded-2xl bg-bg-secondary">
                         <img
                           src={project.imageUrl}
@@ -87,7 +134,7 @@ const ProjectSlider: React.FC = () => {
                         {project.skills.map((skill, index) => (
                           <span
                             key={index}
-                            className="px-3 py-1 text-[10px] font-mono uppercase rounded-full border border-primary/20 text-text-muted bg-white/40 backdrop-blur-sm"
+                            className="skill-tag px-3 py-1 text-[10px] font-mono uppercase rounded-full border border-primary/20 text-text-muted bg-white/40 backdrop-blur-sm"
                           >
                             {skill}
                           </span>
@@ -125,13 +172,19 @@ const ProjectSlider: React.FC = () => {
           ))}
         </Swiper>
 
-        <div className="flex justify-center gap-6 mt-4">
-          <button className="prev-btn group cursor-pointer">
+        <div className="nav-btn flex justify-center gap-6 mt-4">
+          <button
+            className={`group transition-all duration-300 ${isBeginning ? 'opacity-20 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}
+            onClick={() => swiperInstance?.slidePrev()}
+            disabled={isBeginning}>
             <div className="w-10 h-10 border border-primary/30 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300 text-text-main">
               ←
             </div>
           </button>
-          <button className="next-btn group cursor-pointer">
+          <button
+            className={`group transition-all duration-300 ${isEnd ? 'opacity-20 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}
+            onClick={() => swiperInstance?.slideNext()}
+            disabled={isEnd}>
             <div className="w-10 h-10 border border-primary/30 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300 text-text-main">
               →
             </div>

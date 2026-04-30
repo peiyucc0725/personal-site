@@ -12,7 +12,7 @@ interface Skill {
 const skillData: Record<string, Skill[]> = {
   frontend: [
     { name: "Vue", level: 95, desc: "核心技術強項，精通 Vue 2/3 生態系（包含 Router, Pinia），具備大型專案架構設計與效能優化經驗。" },
-    { name: "React", level: 60, desc: "目前專案採用的框架，能靈活運用 Hooks 與狀態管理工具，展現跨技術棧的學習力。" },
+    { name: "React", level: 60, desc: "自主鑽研 React 技術棧，掌握 Hooks、狀態管理與組件生命週期；透過跨框架模式對比，深化對前端工程化與 UI 架構的全面理解。" },
     { name: "JavaScript", level: 90, desc: "深厚的 ES6+ 基礎，精通非同步處理（Async/Await）、原型鏈及閉包等核心概念。" },
     { name: "jQuery", level: 90, desc: "具備維護大型舊專案與 Legacy Code 的能力，能精確操作 DOM 並處理跨瀏覽器相容性。" },
     { name: "CSS / SCSS / SASS", level: 85, desc: "熟練使用預處理器與 CSS 設計模式，能精準還原設計稿並實作複雜的手勢與動畫。" }
