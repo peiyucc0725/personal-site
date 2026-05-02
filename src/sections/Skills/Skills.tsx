@@ -90,11 +90,11 @@ const Skills: React.FC = () => {
               tl.to(panel, {
                 flexGrow: isMobile ? 0 : 12,
                 flexBasis: isMobile ? "auto" : "0%",
-                duration: 0.8,
+                duration: 0.4,
               })
                 .to(content, {
                   opacity: 1, x: 0, y: 0,
-                  duration: 0.5,
+                  duration: 0.4,
                 }, "-=0.4");
 
               if (forceAnim) {
@@ -107,7 +107,7 @@ const Skills: React.FC = () => {
                     {
                       opacity: 1,
                       x: 0,
-                      duration: 0.8,
+                      duration: 0.5,
                       stagger: 0.1,
                       ease: "expo.out",
                     },
@@ -125,7 +125,7 @@ const Skills: React.FC = () => {
                   flexGrow: 0,
                   flexBasis: isMobile ? "60px" : "80px",
                   width: isMobile ? "100%" : "80px",
-                  duration: 0.6,
+                  duration: 0.4,
                 }, "<");
             }
           });
@@ -162,42 +162,63 @@ const Skills: React.FC = () => {
   }, [activeCat]);
 
   return (
-    <section id="skills" className="skills-section" ref={containerRef}>
+    <section
+      id="skills"
+      className="skills-section relative flex h-auto md:h-screen flex-col md:flex-row px-[8vw] md:px-[15vw] py-25 overflow-hidden box-border"
+      ref={containerRef}
+    >
       {Object.entries(skillData).map(([key, skills], index) => (
         <div
           key={key}
-          className={`skill-panel ${activeCat === key ? 'active' : ''}`}
+          className={`skill-panel group relative flex flex-col md:flex-row h-full shrink-0 rounded-lg overflow-hidden
+        ${activeCat === key
+              ? 'active grow-12 basis-auto md:basis-[300px] bg-card-bg shadow-[inset_0_0_50px_rgba(142,92,65,0.02)]'
+              : 'grow basis-[60px] md:basis-[80px] bg-transparent'}`}
           data-id={key}
           onClick={() => {
             setActiveCat(key);
             setHasScroll(false);
           }}
         >
-          <div className="panel-label">
-            <span className="num">0{index + 1}</span>
-            <h2 className="title">{key.toUpperCase()}</h2>
+          <div className={`panel-label relative flex flex-row md:flex-col items-center justify-between md:justify-start
+            px-8 md:px-0 py-0 md:py-12 w-full md:w-20 md:min-w-[80px] h-[60px] md:h-full cursor-pointer 
+            shrink-0 whitespace-nowrap ${activeCat === key ? 'bg-transparent' : 'bg-bg-secondary/20 hover:bg-primary-light/10'}`}
+          >
+            <span className={`num text-[0.8rem] text-primary mb-0 md:mb-10 relative`}>
+              0{index + 1}
+            </span>
+            <p
+              className={`title text-[1.2rem] uppercase tracking-widest md:tracking-[0.4em]
+              ${activeCat === key ? 'text-text-main font-semibold' : 'text-accent group-hover:text-primary-dark font-medium'}`}
+            >
+              {key.toUpperCase()}
+            </p>
           </div>
-
           <div
-            className="panel-content"
+            className={`panel-content flex-1 shrink-0 p-8 md:p-16 overflow-x-hidden overflow-y-auto flex flex-col gap-10 w-full md:w-[calc(100vw-240px)] box-border 
+              ${activeCat === key ? 'opacity-100 pointer-events-auto translate-x-0' : 'opacity-0 pointer-events-none -translate-x-5'}`}
             ref={(el) => { contentRefs.current[key] = el; }}
             style={{
               overscrollBehavior: (activeCat === key && hasScroll) ? 'contain' : 'auto'
             }}
           >
             {skills.map((skill, i) => (
-              <div key={i} className="skill-item">
-                <div className="skill-info">
-                  <span className="name">{skill.name}</span>
-                  <span className="percent">{skill.level}%</span>
+              <div key={i} className="skill-item shrink-0 w-full min-w-[200px]">
+                <div className="skill-info flex justify-between items-end mb-3">
+                  <span className="name text-[1.2rem] text-text-main font-medium">{skill.name}</span>
+                  <span className="percent text-[1rem] text-primary">{skill.level}%</span>
                 </div>
-                <div className="progress-track">
+                <div className="progress-track h-px bg-accent/15 relative">
                   <div
-                    className="progress-fill"
+                    className="progress-fill h-0.5 bg-accent absolute top-[-0.5px]"
                     style={{ width: `${skill.level}%`, transformOrigin: 'left' }}
                   ></div>
                 </div>
-                {skill.desc && <p className="desc">{skill.desc}</p>}
+                {skill.desc && (
+                  <p className="desc mt-[15px]! text-[0.9rem] text-text-muted leading-[1.7] tracking-wider text-left opacity-0 -translate-x-5 transition-all duration-300">
+                    {skill.desc}
+                  </p>
+                )}
               </div>
             ))}
           </div>

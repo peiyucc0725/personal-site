@@ -69,18 +69,18 @@ const About = () => {
       className="about-section min-h-screen flex flex-col-reverse md:flex-row items-center justify-center relative gap-[30px] md:gap-[80px]"
     >
       <div className="about-content w-full md:w-[420px] lg:w-[550px] flex flex-col md:items-start justify-center items-center">
-        <div className="flex flex-col items-start w-fit mx-auto px-6">
+        <div className="flex flex-col items-start w-fit mx-auto lg:px-0 px-10">
           {content.map((item, index) => (
             <div
               className="highlight-item flex flex-col items-start min-h-[61px] md:min-h-[81px] max-w-full text-start mb-4 last:mb-0 md:mb-6 w-fit"
               key={index}
             >
               <div
-                className="title title-color text-title font-mono text-[0.9rem] sm:text-[1rem] md:text-[1.1rem] font-semibold mb-2 tracking-wider"
+                className="title title-color text-title font-mono text-[1rem] md:text-[1.1rem] font-semibold mb-2 tracking-wider"
                 data-text={item.title}
               ></div>
               <div
-                className="description text-text-main text-[0.8rem] sm:text-[0.9rem] md:text-[1rem] leading-relaxed opacity-85"
+                className="description text-text-main text-[0.9rem] md:text-[1rem] leading-relaxed opacity-85"
                 data-text={item.desc}
               ></div>
             </div>

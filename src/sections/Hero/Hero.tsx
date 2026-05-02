@@ -111,7 +111,7 @@ const Hero: React.FC = () => {
       </p>
 
       <StateMarker key="hero-marker" isParentAnimDone={animDone} />
-    </section >
+    </section>
   );
 };
 
